@@ -1,25 +1,20 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update \
-    && apt-get install -y curl subversion build-essential flex bison libboost-dev \
-       texinfo stx-btree-dev zip netcat gawk python2.7 python-serial libz-dev telnet vim \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get install -y curl build-essential telnet \ 
+       texinfo zip netcat gawk libz-dev telnet vim \
+       git sudo astyle tmux \
     && apt-get autoclean
 
-RUN mkdir /sdcc -p \
-    && cd /sdcc \
-    && svn checkout svn://svn.code.sf.net/p/sdcc/code/trunk/sdcc@10977 \
-    && cd sdcc \
-    && ./configure --disable-pic14-port --disable-pic16-port \
-    && make && make install \
-    && cd / \
-    && rm -Rf /sdcc /tmp/* \
-
-RUN mkdir -p /home/siuyin \
-    && adduser siuyin --disabled-password \
+RUN adduser siuyin --disabled-password \
     && echo 'siuyin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers 
+COPY --chown=siuyin:siuyin .vimrc /home/siuyin/.vimrc
 
-COPY .vimrc /home/siuyin/.vimrc
-RUN  chown -R siuyin:siuyin /home/siuyin
+ADD https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.0.0/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2 /tmp
+RUN cp -r /tmp/sdcc-4.0.0/bin /usr/local \
+    && cp -r /tmp/sdcc-4.0.0/share /usr/local \
+    && rm -rf /tmp/sdcc-4.0.0
 
 USER siuyin
 WORKDIR /home/siuyin

@@ -8,6 +8,7 @@ set listchars+=space:.
 map <C-n> :cnext<CR>
 map <C-m> :cprev<CR>
 noremap <leader>a :cclose<CR>
+noremap <leader>f :% !astyle  --style=java --indent=tab=8<CR>
 let g:go_list_type = "quickfix"
 let g:go_metalinter_command = "golangci-lint"
 let g:go_metalinter_deadline = "10s"
