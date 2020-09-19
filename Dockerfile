@@ -27,3 +27,4 @@ RUN git clone https://github.com/siuyin/pk2cmd.git \
 RUN git clone https://github.com/vdudouyt/stm8flash.git \
     && cd stm8flash \
     && make 
+
