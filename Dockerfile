@@ -4,7 +4,7 @@ RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y curl build-essential telnet \ 
        texinfo zip netcat gawk libz-dev telnet vim \
-       git sudo astyle tmux gputils \
+       git sudo astyle tmux gputils universal-ctags \
     && apt-get autoclean
 
 RUN adduser siuyin --disabled-password \
