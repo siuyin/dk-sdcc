@@ -11,10 +11,10 @@ RUN adduser siuyin --disabled-password \
     && echo 'siuyin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers 
 COPY --chown=siuyin:siuyin .vimrc /home/siuyin/.vimrc
 
-ADD https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.0.0/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2 /tmp
-RUN cp -r /tmp/sdcc-4.0.0/bin /usr/local \
-    && cp -r /tmp/sdcc-4.0.0/share /usr/local \
-    && rm -rf /tmp/sdcc-4.0.0
+RUN cd /tmp \
+    && curl -OL https://downloads.sourceforge.net/project/sdcc/sdcc-linux-amd64/4.0.0/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2 \
+    && tar xf /tmp/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2 --strip-components=1 -C /usr/local \
+    && rm -f /tmp/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2
 
 USER siuyin
 WORKDIR /home/siuyin
