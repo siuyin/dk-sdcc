@@ -9,7 +9,17 @@ RUN mkdir /sdcc -p \
     && cd /sdcc \
     && svn checkout svn://svn.code.sf.net/p/sdcc/code/trunk/sdcc@10977 \
     && cd sdcc \
-    && ./configure \
+    && ./configure --disable-pic14-port --disable-pic16-port \
     && make && make install \
     && cd / \
-    && rm -Rf /sdcc /tmp/*
+    && rm -Rf /sdcc /tmp/* \
+
+RUN mkdir -p /home/siuyin \
+    && adduser siuyin --disabled-password \
+    && echo 'siuyin ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers 
+
+COPY .vimrc /home/siuyin/.vimrc
+RUN  chown -R siuyin:siuyin /home/siuyin
+
+USER siuyin
+WORKDIR /home/siuyin
