@@ -28,3 +28,9 @@ RUN git clone https://github.com/vdudouyt/stm8flash.git \
     && cd stm8flash \
     && make 
 
+RUN mkdir -p e4thcom \
+    && cd e4thcom \
+    && curl -o tmp.tgz -L https://wiki.forth-ev.de/lib/exe/fetch.php/projects:e4thcom:e4thcom-0.8.5.tar.gz \
+    && tar xf tmp.tgz \
+    && rm -f tmp.tgz \
+    && echo "./e4thcom -t stm8ef -d ttyUSB0" > README.md
